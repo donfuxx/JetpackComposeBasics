@@ -39,6 +39,26 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp(
+    modifier: Modifier = Modifier
+) {
+    var shouldShowOnboarding by remember { mutableStateOf(true) }
+    if (shouldShowOnboarding) {
+        OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
+    } else {
+        Greetings(modifier)
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun MyAppPreview() {
+    JetpackComposeBasicsTheme {
+        MyApp()
+    }
+}
+
+@Composable
+fun Greetings(
     modifier: Modifier = Modifier,
     names: List<String> = listOf<String>("World", "Compose")
 ) {
@@ -48,6 +68,14 @@ fun MyApp(
         names.forEach { name ->
             Greeting(name)
         }
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun GreetingsPreview() {
+    JetpackComposeBasicsTheme {
+        Greetings()
     }
 }
 
@@ -75,18 +103,8 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     }
 }
 
-@Preview(showBackground = true, widthDp = 320)
 @Composable
-fun GreetingPreview() {
-    JetpackComposeBasicsTheme {
-        MyApp()
-    }
-}
-
-@Composable
-fun OnboardingScreen(modifier: Modifier = Modifier) {
-    // TODO: This state should be hoisted
-    var shouldShowOnboarding by remember { mutableStateOf(true) }
+fun OnboardingScreen(modifier: Modifier = Modifier, onContinueClicked: () -> Unit) {
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -96,7 +114,7 @@ fun OnboardingScreen(modifier: Modifier = Modifier) {
         Text("Welcome to the Basics Codelab!")
         Button(
             modifier = Modifier.padding(vertical = 24.dp),
-            onClick = { shouldShowOnboarding = false }
+            onClick = onContinueClicked
         ) {
             Text("Continue")
         }
@@ -107,6 +125,6 @@ fun OnboardingScreen(modifier: Modifier = Modifier) {
 @Composable
 fun OnboardingPreview() {
     JetpackComposeBasicsTheme {
-        OnboardingScreen()
+        OnboardingScreen(onContinueClicked = { true })
     }
 }
