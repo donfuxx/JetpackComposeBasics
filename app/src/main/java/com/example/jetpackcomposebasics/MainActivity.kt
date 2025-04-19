@@ -1,5 +1,6 @@
 package com.example.jetpackcomposebasics
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -48,10 +49,12 @@ fun MyApp(
     modifier: Modifier = Modifier
 ) {
     var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
-    if (shouldShowOnboarding) {
-        OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
-    } else {
-        Greetings(modifier)
+    Surface(modifier) {
+        if (shouldShowOnboarding) {
+            OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
+        } else {
+            Greetings(modifier)
+        }
     }
 }
 
@@ -72,7 +75,7 @@ fun Greetings(
         modifier = modifier.padding(vertical = 24.dp),
     ) {
         items(items = names) { name ->
-            Greeting(name = name)
+            Greeting(name = name, modifier)
         }
     }
 }
@@ -106,9 +109,11 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                     .padding(bottom = extraPadding.coerceAtLeast(0.dp))
             ) {
                 Text(text = "Hello")
-                Text(text = name, style = MaterialTheme.typography.headlineMedium.copy(
-                    fontWeight = FontWeight.ExtraBold
-                ))
+                Text(
+                    text = name, style = MaterialTheme.typography.headlineMedium.copy(
+                        fontWeight = FontWeight.ExtraBold
+                    )
+                )
             }
             ElevatedButton(onClick = { expanded.value = !expanded.value }) {
                 Text(if (expanded.value) "Show less" else "Show more")
@@ -116,6 +121,21 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         }
     }
 }
+
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    uiMode = UI_MODE_NIGHT_YES,
+    name = "GreetingPreviewDark"
+)
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+fun GreetingPreview() {
+    JetpackComposeBasicsTheme {
+        Greeting("Hi")
+    }
+}
+
 
 @Composable
 fun OnboardingScreen(modifier: Modifier = Modifier, onContinueClicked: () -> Unit) {
