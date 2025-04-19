@@ -38,7 +38,7 @@ fun MyApp(
     names: List<String> = listOf<String>("World", "Compose")
 ) {
     Column(
-        modifier = modifier.padding(vertical = 4.dp),
+        modifier = modifier.padding(vertical = 24.dp),
     ) {
         names.forEach { name ->
             Greeting(name)
