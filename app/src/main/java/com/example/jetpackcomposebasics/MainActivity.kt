@@ -35,7 +35,7 @@ fun MyApp(
     names: List<String> = listOf<String>("World", "Compose")
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.padding(vertical = 4.dp),
     ) {
         names.forEach { name ->
             Greeting(name)
@@ -45,8 +45,15 @@ fun MyApp(
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface(color = MaterialTheme.colorScheme.primary, modifier = modifier.padding(12.dp)) {
-        Column(modifier = modifier.padding(24.dp).fillMaxWidth()) {
+    Surface(
+        color = MaterialTheme.colorScheme.primary,
+        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+    ) {
+        Column(
+            modifier = modifier
+                .padding(24.dp)
+                .fillMaxWidth()
+        ) {
             Text(text = "Hello")
             Text(text = name)
         }
