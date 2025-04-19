@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -29,26 +30,30 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(modifier: Modifier = Modifier) {
-    Surface(
+fun MyApp(
+    modifier: Modifier = Modifier,
+    names: List<String> = listOf<String>("World", "Compose")
+) {
+    Column(
         modifier = modifier,
-        color = MaterialTheme.colorScheme.background
     ) {
-        Greeting("Android")
+        names.forEach { name ->
+            Greeting(name)
+        }
     }
 }
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface(color = MaterialTheme.colorScheme.primary) {
-        Column(modifier = modifier.padding(24.dp)) {
+    Surface(color = MaterialTheme.colorScheme.primary, modifier = modifier.padding(12.dp)) {
+        Column(modifier = modifier.padding(24.dp).fillMaxWidth()) {
             Text(text = "Hello")
             Text(text = name)
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, widthDp = 320)
 @Composable
 fun GreetingPreview() {
     JetpackComposeBasicsTheme {
